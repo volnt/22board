@@ -54,9 +54,9 @@ def post_message():
         abort(400)
     message = Message(request.json.get("message"))
     if message.save():
-        return make_response(jsonify(message.to_dict()), 200)
+        return make_response(jsonify(message.to_dict()))
     else:
-        return make_response(jsonify({"error": "Could not save message."}))
+        return make_response(jsonify({"error": "Could not save message."}), 400)
 
 @app.route('/api/message/<sha>', methods=['GET'])
 def get_message(sha):
@@ -64,4 +64,11 @@ def get_message(sha):
     if message:
         return make_response(jsonify(message.to_dict()))
     else:
-        return make_response(jsonify({"error": "Could not get message."}))
+        return make_response(jsonify({"error": "Could not get message."}), 400)
+
+@app.route('/api/messages', methods=['GET'])
+def get_messages():
+    messages = list(redis.smembers("messages"))
+    return make_response(jsonify({
+        "messages": messages
+    }))
