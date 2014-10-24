@@ -1,9 +1,9 @@
 from app import app, redis
 from flask import jsonify, make_response, abort, request
 from ast import literal_eval
-import redis
 import hashlib
 from datetime import datetime
+from user import is_authenticated
 
 DATE_FMT = "%Y-%m-%d %H:%M:%S.%f"
 
@@ -48,6 +48,7 @@ class Message(object):
                 redis.set("message:{}".format(self.sha), self.to_dict()))
 
 @app.route('/api/message', methods=['POST'])
+@is_authenticated
 def post_message():
     if not request.json:
         abort(400)
