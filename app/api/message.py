@@ -1,4 +1,4 @@
-from app import app
+from app import app, redis
 from flask import jsonify, make_response, abort, request
 from ast import literal_eval
 import redis
@@ -11,7 +11,6 @@ DATE_FMT = "%Y-%m-%d %H:%M:%S.%f"
  message:<id> -> str(json(object))
  messages     -> [list ids]
 """
-redis = redis.Redis()
 
 class Message(object):
     def __init__(self, message, sha=None, karma=None, date=None):
