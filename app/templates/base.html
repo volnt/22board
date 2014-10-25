@@ -38,6 +38,9 @@
       </div>
     </nav>
 
+    {{ Auth.token.sha }}<br>
+    {{ Auth.is_authenticated }}
+
     <div id="content" ng-view></div>
 
     <script src="static/js/jquery.min.js"></script>

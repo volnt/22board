@@ -7,5 +7,6 @@ app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page
     /*
     * Entry point of the controller.
     */
+    $scope.Auth.token_load();
   }();
 });
