@@ -53,7 +53,10 @@ app.factory('Auth', function($http) {
   };
   var token_request = function() {
     $http.get('/api/token/request').success(function(response) {
+      token = {};
+      token_save();
       token.sha = response.sha;
+      is_authenticated = false;
     }).error(function() {
     });
   };
