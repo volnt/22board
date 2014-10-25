@@ -25,3 +25,31 @@ app.factory('Page', function() {
     setTitle: function(newTitle) { title = newTitle; }
   };
 });
+
+app.factory('Auth', function($http) {
+  var authenticated = false;
+  var tokens = {};
+
+  return {
+    is_authenticated: function() {
+      return authenticated;
+    },
+    token: function() {
+      return tokens;
+    },
+    token_verify: function() {
+      $http.post('/api/token/verify', tokens).success(function(response) {
+        authenticated = true;
+      }).error(function() {
+        authenticated = false;
+        tokens = {};
+      });
+    },
+    token_request: function() {
+      $http.get('/api/token/request').success(function(response) {
+        tokens.sha = response.sha;
+      }).error(function() {
+      });
+    }
+  };
+});

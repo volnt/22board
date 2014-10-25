@@ -1,7 +1,7 @@
 <div class="alert alert-success" role="alert" ng-show="alerts.success">{{ alerts.success }}</div>
 <div class="alert alert-danger" role="alert" ng-show="alerts.danger">{{ alerts.danger }}</div>
 
-<div class="row">
+<div class="row" ng-show="Auth.is_authenticated()">
   <div class="col-xs-12 col-sm-6">
     <form role="form" ng-submit="submitMessage()">
       <div class="form-group">

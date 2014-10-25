@@ -3,7 +3,7 @@ from flask import jsonify, make_response, abort, request
 from ast import literal_eval
 import hashlib
 from datetime import datetime
-from user import is_authenticated
+from auth import is_authenticated
 
 DATE_FMT = "%Y-%m-%d %H:%M:%S.%f"
 

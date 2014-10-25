@@ -1,7 +1,8 @@
-app.controller("IndexCtrl", function($scope, $http, $routeParams, Page) {
+app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
 
   $scope.loading = true;
   $scope.Page = Page;
+  $scope.Auth = Auth;
 
   $scope.shas = [];
   $scope.messages = {};
@@ -35,7 +36,7 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page) {
   }
 
   $scope.submitMessage = function() {
-    $http.post("/api/message", {"message": $scope.message}).success(function(response) {
+    $http.post("/api/message", {"message": $scope.message, "auth": $scope.Auth.token()}).success(function(response) {
       $scope.alerts.reset();
       $scope.messages[response.sha] = response;
       $scope.shas.push(response.sha);

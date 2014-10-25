@@ -1,24 +1,7 @@
-app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page) {
+app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page, Auth) {
 
   $scope.Page = Page;
-  $scope.is_authenticated = false;
-  $scope.token = {};
-
-  $scope.token_verify = function() {
-    $http.post('/api/token/verify', $scope.token).success(function(response) {
-      $scope.is_authenticated = true;
-    }).error(function() {
-      $scope.is_authenticated = false;
-      $scope.token = {};
-    });
-  }
-
-  $scope.token_request = function() {
-    $http.get('/api/token/request').success(function(response) {
-      $scope.token.sha = response.sha;
-    }).error(function() {
-    });
-  }
+  $scope.Auth = Auth;
 
   $scope.main = function() {
     /*
