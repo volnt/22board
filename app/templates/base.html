@@ -10,42 +10,53 @@
     <link href="static/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
     <link href="static/css/print.css" media="print" rel="stylesheet" type="text/css" />
     <!--[if IE]>
-    <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <![endif]-->
+        <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <![endif]-->
   </head>
-  <body style="overflow: hidden;">
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">            
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">22board</a>
+  <body>
+    <div id="background">
+      <img src="static/img/background.jpg" />
+    </div>
+    <div class="container">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">            
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">22board</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav" ng-show="!Auth.is_authenticated() && !Auth.token().sha">
+              <li><button type="button" class="btn btn-default navbar-btn" ng-click="Auth.token_request()">Sign in</button></li>
+            </ul>
+            <form class="navbar-form navbar-left form-inline" role="authenticate" ng-submit="Auth.token_verify()" ng-show="Auth.token().sha && !Auth.is_authenticated()">
+              <div class="form-group text-center">
+                <div class="form-control">
+                  <img ng-src="/api/token/{{Auth.token().sha}}.jpeg" />
+                  </div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="Auth.token().captcha" placeholder="Captcha">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav" ng-show="Auth.is_authenticated()">
+              <li><button type="button" class="btn btn-default navbar-btn" ng-click="Auth.token_request()"><i class="glyphicon glyphicon-refresh"></i></button></li>
+            </ul>
+          </div>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav" ng-show="!Auth.is_authenticated() && !Auth.token().sha">
-            <li><button type="button" class="btn btn-default navbar-btn" ng-click="Auth.token_request()">Sign in</button></li>
-          </ul>
-          <form class="navbar-form navbar-left" role="authenticate" ng-submit="Auth.token_verify()" ng-show="Auth.token().sha && !Auth.is_authenticated()">
-            <div class="form-group">
-              <img ng-src="/api/token/{{Auth.token().sha}}.jpeg" class="form-control"/>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" ng-model="Auth.token().captcha" placeholder="Captcha">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
-          <ul class="nav navbar-nav" ng-show="Auth.is_authenticated()">
-            <li><button type="button" class="btn btn-default navbar-btn" ng-click="Auth.token_request()"><i class="glyphicon glyphicon-refresh"></i></button></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+      </nav>
+      <section id="promotion">
+      </section>
 
-    <div id="content" ng-view></div>
+      <section id="messages">
+        <div ng-view></div>
+      </section>
+    </div>
 
     <script src="static/js/libs/jquery.min.js"></script>
     <script src="static/js/libs/bootstrap.min.js"></script>

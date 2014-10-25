@@ -21,7 +21,7 @@ class Token(object):
         sha = sha1(str(random())).hexdigest()
         captcha = Capytcha(sha1(str(random())).hexdigest()[:6])
         captcha.save("app/static/captcha/{}.jpeg".format(sha), position=(15, 0),
-                     font={"filename":"app/static/fonts/MonospaceTypewriter.ttf",
+                     font={"filename":"app/static/css/fonts/CaviarDreams.ttf",
                            "size": 20})
         return cls(sha, captcha.string)
 
