@@ -43,7 +43,7 @@ app.factory('Auth', function($http) {
   };
 
   var token_verify = function() {
-    $http.post('/api/token/verify', token).success(function(response) {
+    $http.get('/api/token/verify', {"params": token}).success(function(response) {
       is_authenticated = true;
       token_save();
     }).error(function() {

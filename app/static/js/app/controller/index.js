@@ -26,10 +26,12 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
     }
   }
 
-  $scope.getMessage = function(sha) {
-    $http.get("/api/message/"+sha).success(function(response) {
+  $scope.getMessages = function(shas) {
+    $http.get("/api/message/lookup", {"params": {"shas": shas.join(",")}}).success(function(response) {
       $scope.alerts.reset();
-      $scope.messages[sha] = response;
+      for (var sha in response) {
+        $scope.messages[sha] = response[sha];
+      }
     }).error(function(response) {
       $scope.alerts.setDanger(response.error);
     });
@@ -50,6 +52,7 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
     $http.get("/api/messages").success(function(response) {
       $scope.alerts.reset();
       $scope.shas = response.messages;
+      $scope.getMessages($scope.shas);
     }).error(function(response) {
       $scope.alerts.setDanger(response.error);
     });

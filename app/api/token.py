@@ -59,12 +59,12 @@ def token_request():
     else:
         return make_response(jsonify({"error": "Could not create token."}), 400)
 
-@app.route('/api/token/verify', methods=["POST"])
+@app.route('/api/token/verify')
 def token_verify():
-    if not request.json:
+    if not request.args:
         return abort(400)
-    sha = request.json.get("sha")
-    captcha = request.json.get("captcha")
+    sha = request.args.get("sha")
+    captcha = request.args.get("captcha")
     if Token.check_captcha(sha, captcha):
         return make_response(jsonify({"success": "Authentication success."}))
     else:

@@ -58,7 +58,7 @@ def post_message():
     else:
         return make_response(jsonify({"error": "Could not save message."}), 400)
 
-@app.route('/api/message/<sha>', methods=['GET'])
+@app.route('/api/message/<sha>')
 def get_message(sha):
     message = Message.from_sha(sha)
     if message:
@@ -66,7 +66,20 @@ def get_message(sha):
     else:
         return make_response(jsonify({"error": "Could not get message."}), 400)
 
-@app.route('/api/messages', methods=['GET'])
+@app.route('/api/message/lookup')
+def message_lookup():
+    if not request.args:
+        return abort(400)
+    shas = request.args.get("shas").split(',')
+    messages = []
+    for sha in shas:
+        message = Message.from_sha(sha)
+        if message:
+            messages.append(message)
+    return make_response(jsonify({message.sha: message.to_dict() for message in messages}))
+    
+
+@app.route('/api/messages')
 def get_messages():
     messages = list(redis.smembers("messages"))
     return make_response(jsonify({
