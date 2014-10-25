@@ -35,7 +35,10 @@ class Token(object):
     @staticmethod
     def check_captcha(sha, captcha):
         token = redis.get("token:{}".format(sha))
-        return token and literal_eval(token)["captcha"] == captcha
+        if not token: return False
+        if not literal_eval(token)["captcha"] == captcha:
+            return False # TODO : delete failed captcha
+        return True
 
     def to_dict(self, public=True):
         if public:
@@ -56,16 +59,16 @@ def token_request():
     else:
         return make_response(jsonify({"error": "Could not create token."}), 400)
 
-@app.route('/api/token/verify')
+@app.route('/api/token/verify', methods=["POST"])
 def token_verify():
     if not request.json:
         return abort(400)
     sha = request.json.get("sha")
-    string = request.json.get("string")
-    if Token.check_captcha(sha, string):
+    captcha = request.json.get("captcha")
+    if Token.check_captcha(sha, captcha):
         return make_response(jsonify({"success": "Authentication success."}))
     else:
-        return make_response(jsonify({"error": "Token could not be verified."}))
+        return make_response(jsonify({"error": "Token could not be verified."}), 400)
 
 @app.route('/api/token/<sha>.jpeg')
 def get_captcha(sha):
