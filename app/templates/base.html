@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/style.css" rel="stylesheet">
+
+    <link href="static/css/libs/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="static/css/print.css" media="print" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+    <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
   </head>
   <body style="overflow: hidden;">
     <nav class="navbar navbar-default" role="navigation">
@@ -42,10 +47,10 @@
 
     <div id="content" ng-view></div>
 
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/angular.min.js"></script>
-    <script src="static/js/angular-route.min.js"></script>
+    <script src="static/js/libs/jquery.min.js"></script>
+    <script src="static/js/libs/bootstrap.min.js"></script>
+    <script src="static/js/libs/angular.min.js"></script>
+    <script src="static/js/libs/angular-route.min.js"></script>
 
     <script src="static/js/app/app.js"></script>
     <script src="static/js/app/controller/main.js"></script>
