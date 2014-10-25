@@ -27,15 +27,19 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    z-index: -9;
     img {
-        z-index: -9;
         position: absolute;
         left: 50%;
         margin-left: -960px;
     }
 }
 
-.navbar {
+.navbar-fixed-top {
+    border-radius: 5px;
+}
+
+.navbar-transparent {
     background-color: transparent;
     border-color: transparent;
     .navbar-brand {
@@ -48,14 +52,19 @@ body {
 }
 
 #promotion {
+    text-align: center;
     margin-top: 25%;
     margin-bottom: 25%;
     height: 50%;
     h2 {
-        text-align: center;
         font-size: 60px;
         font-weight: bold;
+        margin-bottom: 100px;
     }
+}
+
+#messages {
+    padding-top: 100px;
 }
 
 .landing {
