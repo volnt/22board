@@ -26,6 +26,11 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
     }
   }
 
+  $scope.$watch('message', function(nv, ov) {
+    var pattern = GeoPattern.generate(nv);
+    $('#messages').css('background-image', pattern.toDataUrl());
+  });
+
   $scope.getMessages = function(shas) {
     $http.get("/api/message/lookup", {"params": {"shas": shas.join(",")}}).success(function(response) {
       $scope.alerts.reset();

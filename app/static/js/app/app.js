@@ -1,9 +1,16 @@
-var app = angular.module("app", ["ngRoute"])
-                 .filter('safe', ['$sce', function($sce) {
+var app = angular.module("app", ["ngRoute"]);
+
+app.filter('safe', ['$sce', function($sce) {
   return function(text) {
     return $sce.trustAsHtml(text);
   };
-}]);
+}]).filter('formatDate', function() {
+  return function(date) {
+    var fDate = new Date(date);
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return (fDate.getDate() + " " + months[fDate.getMonth()] + " " + fDate.getFullYear());
+  };
+});
 
 app.config(function($routeProvider) {
   $routeProvider

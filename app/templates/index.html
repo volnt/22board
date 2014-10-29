@@ -1,25 +1,42 @@
+<div class="container">
 <div class="alert alert-success" role="alert" ng-show="alerts.success">{{ alerts.success }}</div>
 <div class="alert alert-danger" role="alert" ng-show="alerts.danger">{{ alerts.danger }}</div>
 
-<div class="row" ng-show="Auth.is_authenticated()">
-  <div class="col-xs-12 col-sm-6">
-    <form role="form" ng-submit="submitMessage()">
-      <div class="form-group">
-        <label for="message">Message</label>
-        <input type="text" class="form-control" id="message" placeholder="Hi 22board :)" ng-model="message">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
+
+<div class="messages-container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <ul>
+        <li ng-repeat="sha in shas" class="message row">
+          <div class="message-content col-xs-9">
+            {{ messages[sha].message }}
+          </div>
+          <div class="col-xs-3 message-details">
+            <div class="message-vote">
+              {{ messages[sha].karma }} Karma
+            </div>
+            <div class="message-date">
+              {{ messages[sha].date | formatDate }}
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="space-4"></div>
+    </div>
   </div>
 </div>
+</div>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12">
-    <ul>
-      <li ng-repeat="sha in shas">
-          {{ messages[sha].message }}
-      </li>
-    </ul>
-  </div>
+<div class="message-input" ng-show="Auth.is_authenticated()">
+  <form role="form" class="container">
+    <div class="form-group">
+      <div class="input-group">
+        <input type="text" class="form-control input-bigger input-lg" id="input-message" placeholder="Write a message" ng-model="message">
+        <div class="input-group-addon">
+          <a href="#" ng-click="submitMessage();return false;">Submit</a>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 

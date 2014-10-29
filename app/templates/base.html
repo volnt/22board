@@ -53,16 +53,16 @@
 
       <section id="promotion">
         <h2>Tell what you think. No drawbacks.</h2>
-        <button type="button" class="btn btn-default" onclick="$('html, body').animate({scrollTop: $('#messages').offset().top}, 500);">See what people say</button>
+        <button type="button" class="btn btn-default btn-bigger" onclick="$('html, body').animate({scrollTop: $('#messages').offset().top}, 500);">See what people say</button>
       </section>
     </div>
+
     <section id="messages">
-      <div class="container">
-        <div ng-view></div>
-      </div>
+      <div ng-view></div>
     </section>
 
     <script src="static/js/libs/jquery.min.js"></script>
+    <script src="static/js/libs/geopattern.min.js"></script>    
     <script src="static/js/libs/bootstrap.min.js"></script>
     <script src="static/js/libs/angular.min.js"></script>
     <script src="static/js/libs/angular-route.min.js"></script>
