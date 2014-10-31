@@ -130,6 +130,17 @@ body {
     }
 }
 
+.input-group-addon {
+    cursor: pointer;
+    a {
+        text-decoration: initial;
+        color: #4D4E53;
+    }
+}
+.input-group-addon:hover {
+    background: #f3f3f3;
+}
+
 .space-1 { margin-top: 10px; }
 .space-2 { margin-top: 20px; }
 .space-3 { margin-top: 30px; }
