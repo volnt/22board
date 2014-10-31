@@ -10,5 +10,7 @@ setup(
     include_package_data=True,
     install_requires = [
         'Flask==0.10.1',
+        'Pillow==2.6.1',
+        'redis==2.10.3'
         ],
 )
