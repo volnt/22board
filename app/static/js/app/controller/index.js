@@ -63,7 +63,7 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
   }
 
   $scope.main = function() {
-    $http.get("/api/messages").success(function(response) {
+    $http.get("/api/messages/trending").success(function(response) {
       $scope.alerts.reset();
       $scope.shas = response.messages;
       $scope.getMessages($scope.shas);

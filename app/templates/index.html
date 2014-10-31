@@ -1,30 +1,29 @@
 <div class="container">
-<div class="alert alert-success" role="alert" ng-show="alerts.success">{{ alerts.success }}</div>
-<div class="alert alert-danger" role="alert" ng-show="alerts.danger">{{ alerts.danger }}</div>
+  <div class="messages-container">
+    <div class="alert alert-success" role="alert" ng-show="alerts.success">{{ alerts.success }}</div>
+    <div class="alert alert-danger" role="alert" ng-show="alerts.danger">{{ alerts.danger }}</div>
 
-
-<div class="messages-container">
-  <div class="row">
-    <div class="col-xs-12 col-sm-12">
-      <ul>
-        <li ng-repeat="sha in shas" class="message row">
-          <div class="message-content col-xs-9 col-md-8 col-sm-8 col-xs-7">
-            {{ messages[sha].message }}
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 message-details">
-            <div class="message-vote" ng-click="addKarma(sha)">
-              {{ messages[sha].karma }} Karma
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <ul>
+          <li ng-repeat="sha in shas" class="message row">
+            <div class="message-content col-xs-9 col-md-8 col-sm-8 col-xs-7">
+              {{ messages[sha].message }}
             </div>
-            <div class="message-date">
-              {{ messages[sha].date | formatDate }}
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 message-details">
+              <div class="message-vote">
+                <i class="glyphicon glyphicon-chevron-up btn-icon" ng-click="addKarma(sha)" ng-hide="!Auth.is_authenticated()"></i> {{ messages[sha].karma }} Karma
+              </div>
+              <div class="message-date">
+                {{ messages[sha].date | formatDate }}
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-      <div class="space-4"></div>
+          </li>
+        </ul>
+        <div class="space-4"></div>
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <div class="message-input hidden" ng-show="Auth.is_authenticated()">
