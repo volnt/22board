@@ -114,8 +114,10 @@ body {
         padding: 5px;
         .message-content {
             min-height: inherit;
+            word-wrap: break-word;
         }
         .message-details {
+            font-size: 16px;
             min-height: inherit;
             position: relative;
             .message-date {
@@ -129,6 +131,7 @@ body {
         }
     }
 }
+
 
 .input-group-addon {
     cursor: pointer;
