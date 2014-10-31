@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12">
         <ul>
-          <li ng-repeat="sha in shas" class="message row">
+          <li ng-repeat="sha in shas | startFrom: (currentPage-1) * pageSize | limitTo: pageSize" class="message row">
             <div class="message-content col-lg-9 col-md-8 col-sm-8 col-xs-7">
               {{ messages[sha].message }}
             </div>
@@ -20,7 +20,9 @@
             </div>
           </li>
         </ul>
-        <div class="space-4"></div>
+        <a href="#" onclick="return false;" ng-hide="currentPage <= 1" ng-click="currentPage = currentPage - 1">prev</a><span ng-show="currentPage > 1 && currentPage * pageSize < shas.length">|</span><a href="#" ng-show="currentPage * pageSize < shas.length" ng-click="currentPage = currentPage + 1" onclick="return false">next</a>
+        <div class="space-4" ng-show="Auth.is_authenticated()"></div>
+        <div class="space-4" ng-show="currentPage > 1 || currentPage * pageSize < shas.length"></div>
       </div>
     </div>
   </div>

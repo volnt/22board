@@ -7,6 +7,8 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
   $scope.shas = [];
   $scope.messages = {};
   $scope.message = "";
+  $scope.currentPage = 1;
+  $scope.pageSize = 10;
 
   $scope.alerts = {
     success: "",
