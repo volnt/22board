@@ -12,7 +12,7 @@
             {{ messages[sha].message }}
           </div>
           <div class="col-xs-3 message-details">
-            <div class="message-vote">
+            <div class="message-vote" ng-click="addKarma(sha)">
               {{ messages[sha].karma }} Karma
             </div>
             <div class="message-date">

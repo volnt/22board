@@ -9,7 +9,8 @@ DATE_FMT = "%Y-%m-%d %H:%M:%S.%f"
 
 """
  message:<id> -> str(json(object))
- messages     -> [list ids]
+ messages     -> [set ids]
+ karma:<id>   -> [set ids]
 """
 
 class Message(object):
@@ -47,11 +48,24 @@ class Message(object):
         return (redis.sismember("messages", self.sha) and
                 redis.set("message:{}".format(self.sha), self.to_dict()))
 
-@app.route('/api/message', methods=['POST'])
+    def add_karma(self, sha):
+        if redis.sadd("karma:{}".format(self.sha), sha):
+            self.karma += 1
+            return self.update()
+        return False
+
 @is_authenticated
+@app.route('/api/message/<sha>/karma', methods=['POST'])
+def add_karma(sha):
+    message = Message.from_sha(sha)
+    if message and message.add_karma(request.json.get("auth").get("sha")):
+        return make_response(jsonify(message.to_dict()))
+    else:
+        return make_response(jsonify({"error": "Could not add karma to message."}), 400)
+
+@is_authenticated
+@app.route('/api/message', methods=['POST'])
 def post_message():
-    if not request.json:
-        abort(400)
     message = Message(request.json.get("message"))
     if message.save():
         return make_response(jsonify(message.to_dict()))

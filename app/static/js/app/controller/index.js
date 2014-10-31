@@ -31,6 +31,15 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
     $('#messages').css('background-image', pattern.toDataUrl());
   });
 
+  $scope.addKarma = function(sha) {
+    $http.post("/api/message/"+sha+"/karma", {"auth": $scope.Auth.token()}).success(function(response) {
+      $scope.alerts.reset();
+      $scope.messages[sha] = response;
+    }).error(function(response) {
+      $scope.alerts.setDanger(response.error);
+    });
+  }
+
   $scope.getMessages = function(shas) {
     $http.get("/api/message/lookup", {"params": {"shas": shas.join(",")}}).success(function(response) {
       $scope.alerts.reset();
