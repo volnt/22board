@@ -51,7 +51,8 @@ class Message(object):
             "message": self.message,
             "sha": self.sha,
             "karma": self.karma,
-            "date": self.date.strftime(DATE_FMT)
+            "date": self.date.strftime(DATE_FMT),
+            "score": self.score
         }
 
     def save(self):

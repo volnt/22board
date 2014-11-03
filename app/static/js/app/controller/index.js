@@ -28,11 +28,6 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
     }
   }
 
-  $scope.$watch('message', function(nv, ov) {
-    var pattern = GeoPattern.generate(nv);
-    $('#messages').css('background-image', pattern.toDataUrl());
-  });
-
   $scope.addKarma = function(sha) {
     $http.post("/api/message/"+sha+"/karma", {"auth": $scope.Auth.token()}).success(function(response) {
       $scope.alerts.reset();
@@ -48,6 +43,7 @@ app.controller("IndexCtrl", function($scope, $http, $routeParams, Page, Auth) {
       for (var sha in response) {
         $scope.messages[sha] = response[sha];
       }
+      console.log($scope.messages);
     }).error(function(response) {
       $scope.alerts.setDanger(response.error);
     });
