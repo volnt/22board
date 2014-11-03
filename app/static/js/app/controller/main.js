@@ -1,7 +1,8 @@
-app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page, Auth) {
+app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page, Auth, Alert) {
 
   $scope.Page = Page;
   $scope.Auth = Auth;
+  $scope.Alert = Alert;
 
   $scope.main = function() {
     /*
@@ -21,4 +22,15 @@ app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page
       }
     });
   }();
+
+  $scope.submitMessage = function() {
+    $http.post("/api/message", {"message": $scope.message, "auth": $scope.Auth.token()}).success(function(response) {
+      Alert.reset();
+      $scope.messages[response.sha] = response;
+      $scope.shas.push(response.sha);
+      $scope.message = "";
+    }).error(function(response) {
+      Alert.setDanger(response.error);
+    });
+  }
 });

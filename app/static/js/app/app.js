@@ -18,15 +18,11 @@ app.filter('safe', ['$sce', function($sce) {
 
 app.config(function($routeProvider) {
   $routeProvider
-  .when("/", {
-    templateUrl: "index.html",
-    controller: "IndexCtrl"
+  .when("/:type", {
+    templateUrl: "messages.html",
+    controller: "MessagesCtrl"
   })
-  .when("/:message", {
-    templateUrl: "message.html",
-    controller: "MessageCtrl"
-  })
-  .otherwise({redirectTo: '/'});
+  .otherwise({redirectTo: '/trending'});
 });
 
 app.factory('Page', function() {
@@ -34,6 +30,32 @@ app.factory('Page', function() {
   return {
     title: function() { return title; },
     setTitle: function(newTitle) { title = newTitle; }
+  };
+});
+
+app.factory('Alert', function() {
+  var success = "";
+  var danger = "";
+  
+  return {
+    getSuccess: function() {
+      return succes;
+    },
+    getDanger: function() {
+      return danger;
+    },
+    setSuccess: function(message) {
+      danger = "";
+      success = message;
+    },
+    setDanger: function(message) {
+      danger = message;
+      success = "";
+    },
+    reset: function() {
+      danger = "";
+      success = "";
+    }
   };
 });
 

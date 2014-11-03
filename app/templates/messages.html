@@ -1,0 +1,27 @@
+<div class="messages-container">
+  <div class="alert alert-success" role="alert" ng-show="Alert.getSuccess()">{{ Alert.getSuccess() }}</div>
+  <div class="alert alert-danger" role="alert" ng-show="Alert.getDanger()">{{ Alert.getDanger() }}</div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <ul>
+        <li ng-repeat="sha in shas | startFrom: (currentPage-1) * pageSize | limitTo: pageSize" class="message row">
+          <div class="message-content col-lg-9 col-md-8 col-sm-8 col-xs-7">
+            {{ messages[sha].message }}
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 message-details">
+            <div class="message-vote">
+              <i class="glyphicon glyphicon-chevron-up btn-icon" ng-click="addKarma(sha)" ng-hide="!Auth.is_authenticated()"></i> {{ messages[sha].karma }} Karma
+            </div>
+            <div class="message-date">
+              {{ messages[sha].date | formatDate }}
+            </div>
+          </div>
+        </li>
+      </ul>
+      <a href="#" onclick="return false;" ng-hide="currentPage <= 1" ng-click="currentPage = currentPage - 1">prev</a><span ng-show="currentPage > 1 && currentPage * pageSize < shas.length">|</span><a href="#" ng-show="currentPage * pageSize < shas.length" ng-click="currentPage = currentPage + 1" onclick="return false">next</a>
+      <div class="space-4" ng-show="Auth.is_authenticated()"></div>
+      <div class="space-4" ng-show="currentPage > 1 || currentPage * pageSize < shas.length"></div>
+    </div>
+  </div>
+</div>
