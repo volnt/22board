@@ -17,6 +17,7 @@ def dt2ts(dt):
  messages     -> [set ids]
  karma:<id>   -> [set ids]
  trending     -> [ordered set]
+ new          -> [ordered set]
 """
 
 class Message(object):
@@ -56,8 +57,11 @@ class Message(object):
         }
 
     def save(self):
-        return (redis.sadd("messages", self.sha) and
-                redis.set("message:{}".format(self.sha), self.to_dict()))
+        if redis.sadd("messages", self.sha) and redis.set("message:{}".format(self.sha), self.to_dict()):
+            redis.zincrby("new", self.sha, dt2ts(self.date))
+            redis.zremrangebyrank("new", 0, -100)
+            return True
+        return False
 
     def update(self):
         return (redis.sismember("messages", self.sha) and
@@ -119,6 +123,13 @@ def get_messages():
 @app.route('/api/messages/trending')
 def get_messages_trending():
     messages = list(redis.zrevrange("trending", 0, -1))
+    return make_response(jsonify({
+        "messages": messages
+    }))
+
+@app.route('/api/messages/new')
+def get_messages_new():
+    messages = list(redis.zrevrange("new", 0, -1))
     return make_response(jsonify({
         "messages": messages
     }))

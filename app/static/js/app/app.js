@@ -39,7 +39,7 @@ app.factory('Alert', function() {
   
   return {
     getSuccess: function() {
-      return succes;
+      return success;
     },
     getDanger: function() {
       return danger;
