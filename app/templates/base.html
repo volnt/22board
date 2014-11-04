@@ -14,10 +14,7 @@
         <![endif]-->
   </head>
   <body>
-    <div class="background">
-      <img src="static/img/background.jpg" />
-    </div>
-    <div class="container landing">
+    <div class="container">
       <nav class="navbar navbar-inverse navbar-fixed-top navbar-transparent" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -56,32 +53,9 @@
           </div>
         </div>
       </nav>
-
-      <section id="promotion">
-        <h2>Tell what you think. No drawbacks.</h2>
-        <button type="button" class="btn btn-default btn-bigger" onclick="$('html, body').animate({scrollTop: $('#messages').offset().top}, 500);">See what people say</button>
-      </section>
     </div>
 
-    <section id="messages">
-      <div class="container">
-        <div ng-view></div>
-      </div>
-      
-      <div class="message-input hidden" ng-show="Auth.is_authenticated()">
-        <form role="form" class="container">
-          <div class="form-group">
-            <div class="input-group">
-              <input type="text" class="form-control input-bigger input-lg" id="input-message" placeholder="Write a message" ng-model="message">
-              <div class="input-group-addon" ng-click="submitMessage()">
-                Submit
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-
-    </section>
+    <div ng-view></div>
 
     <script src="static/js/libs/jquery.min.js"></script>
     <script src="static/js/libs/geopattern.min.js"></script>    
@@ -91,6 +65,7 @@
 
     <script src="static/js/app/app.js"></script>
     <script src="static/js/app/controller/main.js"></script>
+    <script src="static/js/app/controller/index.js"></script>
     <script src="static/js/app/controller/messages.js"></script>
   </body>
 </html>

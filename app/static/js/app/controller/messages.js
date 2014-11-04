@@ -9,6 +9,17 @@ app.controller("MessagesCtrl", function($scope, $http, $routeParams, Page, Auth,
   $scope.currentPage = 1;
   $scope.pageSize = 10;
 
+  $scope.submitMessage = function() {
+    $http.post("/api/message", {"message": $scope.message, "auth": $scope.Auth.token()}).success(function(response) {
+      Alert.reset();
+      $scope.messages[response.sha] = response;
+      $scope.shas.push(response.sha);
+      $scope.message = "";
+    }).error(function(response) {
+      Alert.setDanger(response.error);
+    });
+  }
+
   $scope.addKarma = function(sha) {
     $http.post("/api/message/"+sha+"/karma", {"auth": $scope.Auth.token()}).success(function(response) {
       Alert.reset();
@@ -24,7 +35,6 @@ app.controller("MessagesCtrl", function($scope, $http, $routeParams, Page, Auth,
       for (var sha in response) {
         $scope.messages[sha] = response[sha];
       }
-      console.log($scope.messages);
     }).error(function(response) {
       Alert.setDanger(response.error);
     });
@@ -56,5 +66,7 @@ app.controller("MessagesCtrl", function($scope, $http, $routeParams, Page, Auth,
     } else if ($routeParams.type == "trending") {
       $scope.getTrending();
     }
+
+    $(".navbar").removeClass("navbar-transparent");
   }();
 });

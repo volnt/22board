@@ -1,4 +1,4 @@
-app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page, Auth, Alert) {
+app.controller("IndexCtrl", function($scope, $http, $routeParams, $location, Page, Auth, Alert) {
 
   $scope.Page = Page;
   $scope.Auth = Auth;
@@ -8,6 +8,6 @@ app.controller("MainCtrl", function($scope, $http, $routeParams, $location, Page
     /*
     * Entry point of the controller.
     */
-    $scope.Auth.token_load();
+    $(".navbar").addClass("navbar-transparent");
   }();
 });

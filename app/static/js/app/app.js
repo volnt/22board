@@ -18,11 +18,15 @@ app.filter('safe', ['$sce', function($sce) {
 
 app.config(function($routeProvider) {
   $routeProvider
+  .when("/", {
+    templateUrl: "index.html",
+    controller: "IndexCtrl"
+  })
   .when("/:type", {
     templateUrl: "messages.html",
     controller: "MessagesCtrl"
   })
-  .otherwise({redirectTo: '/trending'});
+  .otherwise({redirectTo: '/'});
 });
 
 app.factory('Page', function() {
