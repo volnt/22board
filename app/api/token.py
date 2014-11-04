@@ -18,12 +18,9 @@ class Token(object):
 
     @classmethod
     def generate(cls):
-        sha = sha1(str(random())).hexdigest()
-        captcha = Capytcha(sha1(str(random())).hexdigest()[:6])
-        captcha.save("app/static/captcha/{}.jpeg".format(sha), position=(15, 0),
-                     font={"filename":"app/static/css/fonts/CaviarDreams.ttf",
-                           "size": 20})
-        return cls(sha, captcha.string)
+        captcha = Capytcha.generate()
+        captcha.save()
+        return cls(captcha.sha, captcha.url)
 
     @classmethod
     def from_sha(cls, sha):
@@ -34,22 +31,14 @@ class Token(object):
 
     @staticmethod
     def check_captcha(sha, captcha):
-        token = redis.get("token:{}".format(sha))
-        if not token: return False
-        if not literal_eval(token)["captcha"] == captcha:
-            return False # TODO : delete failed captcha
-        return True
+        return redis.get("token:{}".format(sha)) and sha1(captcha).hexdigest() == sha
 
-    def to_dict(self, public=True):
-        if public:
-            return { "sha": self.sha }
-        else:
-            return { "sha": self.sha, "captcha": self.captcha }
+    def to_dict(self):
+        return { "sha": self.sha, "captcha": self.captcha }
 
     def save(self):
         return (redis.sadd("tokens", self.sha) and
-                redis.set("token:{}".format(self.sha), self.to_dict(public=False)))
-
+                redis.set("token:{}".format(self.sha), self.to_dict()))
 
 @app.route('/api/token/request')
 def token_request():
@@ -69,12 +58,3 @@ def token_verify():
         return make_response(jsonify({"success": "Authentication success."}))
     else:
         return make_response(jsonify({"error": "Token could not be verified."}), 400)
-
-@app.route('/api/token/<sha>.jpeg')
-def get_captcha(sha):
-    try:
-        return send_file('static/captcha/{}.jpeg'.format(sha))
-    except IOError:
-        abort(404)
-
-    

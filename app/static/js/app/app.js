@@ -93,6 +93,7 @@ app.factory('Auth', function($http) {
       token = {};
       token_save();
       token.sha = response.sha;
+      token.captcha_img = response.captcha;
       is_authenticated = false;
     }).error(function() {
     });
